@@ -1,0 +1,183 @@
+##########################################
+### Configuration for MINION pipelines ###
+##########################################
+
+### Genes of interes 
+# genes_to_work_on:
+#   - PKD1
+#   - PKD2
+#   - LZTR1
+#   - NF1
+#   - NF2
+#   - SMARCE1
+#   - SMARCB1
+#   - TSC1
+#   - TSC2
+#   - SPRED1
+#   - DMRT1
+#   - COL4A3
+#   - COL4A4
+#   - COL4A5
+
+genes_to_work_on:
+  - ATM
+  - APC
+  - BRCA1
+  - BRCA2
+  - BRIP1
+  - CHEK2
+  - PMS1
+  - MSH6
+  - MUTYH
+  - PALB2
+  - PMS2
+  - RAD51C
+  - RAD51D
+  - TP53
+
+# genes_to_filter: /imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/keep_this.txt
+genes_to_filter: /imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/keep_this_ENIGMA.txt
+
+
+### Tanscripts annotations and genome
+genome: "/imppc/labs/eclab/Resources/MINION_ddbb/Ref_files/GRCh38.primary_assembly.genome.fa"
+transcriptome: "/imppc/labs/eclab/Resources/MINION_ddbb/Ref_files/gencode.v46.transcripts.fa"
+gtf_annotation: "/imppc/labs/eclab/Resources/MINION_ddbb/Ref_files/gencode.v46.chr_patch_hapl_scaff.basic.annotation.gtf"
+gff3_annotation: "/imppc/labs/eclab/Resources/MINION_ddbb/Ref_files/gencode.v46.chr_patch_hapl_scaff.basic.annotation.gff3"
+
+### Envs and sing images
+## Anaconda Environments
+anaconda_envs:
+  AGAT_anaconda: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/envs/AGAT.yaml"
+  sequinR_anaconda: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/envs/sequinR.yaml"
+  fastpqc_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/envs/fastp_qc.yaml"
+  bamslam_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/envs/g_alignments.yaml"
+  flair_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/envs/flair.yaml"
+  flames_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION2/envs/FLAMES.yaml"
+  readr_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION2/envs/readr.yaml"
+
+## Singularity images
+singularity_imgs:
+  minimap2_img: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/sing_images/minimap2_2.30.sif"
+  samtools_img: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/sing_images/samtools_v1.7.0_cv4.sif"
+  fastqc_image: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/sing_images/fastqc_0.12.1.sif"
+  multiqc_image: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/sing_images/multiqc_1_8.sif"
+
+### Important folders
+base_path: "/imppc/labs/eclab/ijarne/0_Recerca/5_MINION_ENIGMA"
+# input_files_folder: "/imppc/labs/eclab/Raw_Data/MinION/Prova_170325/no_sample_id/20250317_1157_MC-114182_FAY45806_3caa6d24/fastq_pass"
+input_files_folder: "/imppc/labs/eclab/Raw_Data/MINION_IGNASI/AA_final_place"
+
+snake_files: "/imppc/labs/eclab/ijarne/0_Recerca/5_MINION_ENIGMA/snake_files"
+scriptsR: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/scriptsR"
+flames_script: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION2/scripts/FLAMES"
+flames_config: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION2/config/FLAMES_config.json"
+
+### Manifest file
+manifest_file: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/reads_manifest_ENIGMA.txt"
+manifest_file_lrs4: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/reads_manifest_ENIGMA_lrs4.txt"
+manifest_file_lrs5: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/reads_manifest_ENIGMA_lrs5.txt"
+manifest_file_lrs6: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/reads_manifest_ENIGMA_lrs6.txt"
+manifest_file_lrs7: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/reads_manifest_ENIGMA_lrs7.txt"
+manifest_file_lrs8: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/reads_manifest_ENIGMA_lrs8.txt"
+
+### Samples
+samples_lrs4:
+  - LRS4_LRS4_barcode01
+  - LRS4_LRS4_barcode02
+  - LRS4_LRS4_barcode03
+  - LRS4_LRS4_barcode04
+
+samples_lrs5:
+  - LRS5_LRS5_barcode05
+  - LRS5_LRS5_barcode06
+  - LRS5_LRS5_barcode07
+  - LRS5_LRS5_barcode08
+  - LRS5_LRS5_barcode09
+
+samples_lrs6:
+  - LRS6_LRS6_barcode11
+  - LRS6_LRS6_barcode12
+  - LRS6_LRS6_barcode13
+  - LRS6_LRS6_barcode14
+  - LRS6_LRS6_barcode15
+
+samples_lrs7:
+  - LRS7_LRS7_barcode16
+  - LRS7_LRS7_barcode17
+  - LRS7_LRS7_barcode18
+  - LRS7_LRS7_barcode19
+  - LRS7_LRS7_barcode20
+
+samples_lrs8:
+  - LRS8_LRS8_barcode01
+  - LRS8_LRS8_barcode21
+  - LRS8_LRS8_barcode22
+  - LRS8_LRS8_barcode23
+  - LRS8_LRS8_barcode24
+
+samples:
+  # - batch_PKD_barcode01
+  # - batch_PKD_barcode02
+  # - batch_PKD_barcode03
+  # - batch_PKD_barcode04
+  # - batch_PKD_barcode05
+  # - batch_PKD_barcode06
+  # - batch_PKD_barcode07
+  # - batch_PKD_barcode08
+  # - batch_PKD_barcode09
+  # - batch_PKD_barcode10
+  # - batch_PKD_barcode11
+  # - batch_PKD_barcode12
+  - LRS4_LRS4_barcode01
+  - LRS4_LRS4_barcode02
+  - LRS4_LRS4_barcode03
+  - LRS4_LRS4_barcode04
+  - LRS5_LRS5_barcode05
+  - LRS5_LRS5_barcode06
+  - LRS5_LRS5_barcode07
+  - LRS5_LRS5_barcode08
+  - LRS5_LRS5_barcode09
+  - LRS6_LRS6_barcode11
+  - LRS6_LRS6_barcode12
+  - LRS6_LRS6_barcode13
+  - LRS6_LRS6_barcode14
+  - LRS6_LRS6_barcode15
+  - LRS7_LRS7_barcode16
+  - LRS7_LRS7_barcode17
+  - LRS7_LRS7_barcode18
+  - LRS7_LRS7_barcode19
+  - LRS7_LRS7_barcode20
+  - LRS8_LRS8_barcode01
+  - LRS8_LRS8_barcode21
+  - LRS8_LRS8_barcode22
+  - LRS8_LRS8_barcode23
+  - LRS8_LRS8_barcode24
+  # - Prova17_barcode06
+  # - Prova17_barcode11
+  # - Prova17_barcode12
+  # - Prova17_barcode13
+  # - Prova17_barcode14
+  # - Prova17_barcode15
+  # - Prova17_barcode16
+  # - Prova17_barcode18
+  # - Prova17_barcode20
+  # - Prova17_barcode21
+  # - Prova17_barcode23
+  # - Prova17_barcode24
+  # - Prova20_barcode03
+  # - Run1_1711_barcode01
+  # - Run1_1711_barcode02
+  # - Run1_1711_barcode03
+  # - Run1_1711_barcode04
+  # - Run1_1711_barcode05
+  # - Run1_1711_barcode06
+  # - Run1_1711_barcode07
+  # - Run1_1711_barcode08
+  # - Run1_1711_barcode09
+  # - Run1_1711_barcode10
+  # - Run1_1711_barcode12
+  # - Run1_1711_barcode16
+  # - Run1_1711_barcode17
+  # - Run1_1711_barcode21
+  # - Run1_1711_barcode22

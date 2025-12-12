@@ -1,0 +1,2 @@
+singularity pull docker://staphb/minimap2:2.30
+singularity pull docker://biocontainers/samtools:v1.7.0_cv4
