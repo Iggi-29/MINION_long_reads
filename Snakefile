@@ -18,6 +18,7 @@ sequinR_anaconda = config["anaconda_envs"]["sequinR_anaconda"]
 fastpqc_env = config["anaconda_envs"]["fastpqc_env"]
 bamslam_env = config["anaconda_envs"]["bamslam_env"]
 flair_env = config["anaconda_envs"]["flair_env"]
+flair_env2 = config["anaconda_envs"]["flair_env2"]
 flames_env = config["anaconda_envs"]["flames_env"]
 readr_env = config["anaconda_envs"]["readr_env"]
 
@@ -46,7 +47,7 @@ samples_lrs8 = config["samples_lrs8"]
 ## genes
 genes_to_work_on = config["genes_to_work_on"]
 genes_to_filter = config["genes_to_filter"]
-
+genes_to_work_on_ensembl = config["genes_to_work_on_ensembl"]
 ## ref files
 genome = config["genome"]
 transcriptome = config["transcriptome"]
@@ -60,6 +61,9 @@ snake_files = config["snake_files"]
 scriptsR = config["scriptsR"]
 flames_script = config["flames_script"]
 flames_config = config["flames_config"] 
+
+## color
+colors = config["colors"]
 
 #### Include the rules of the analysis
 include: "Prepare_data.smk"

@@ -171,6 +171,83 @@ rule FLAIR_quantify2:
         """
 
 
+### Diffsplice
+rule FLAIR_diffsplice:
+    input:
+        done_step = expand(base_path + "/results/flair/quantify/{sample}_flair.quantify2_done.txt",
+        base_path = base_path, 
+        sample = samples_lrs5 + samples_lrs6 + samples_lrs7 + samples_lrs8),
+        done_step2 = expand(base_path + "/results/flair/quantify/{sample}_flair.quantify_done.txt",
+        base_path = base_path, sample = samples_lrs4)
+    output:
+        done_step = base_path + "/results/flair/diff_splice/{sample}_flair.diff_splice_done.txt"
+    params:
+        isoforms_bed_file = base_path + "/results/flair/collapsed/{sample}.flair.collapsed.bed.isoforms.bed",
+        diff_splcie_results = base_path + "/results/flair/diff_splice/",
+        counts_file = base_path + "/results/flair/collapsed/{sample}.flair.collapsed.bed.firstpass.q.counts",
+    threads:
+        20
+    conda:
+        flair_env2
+    log:
+        terminal_log = snake_files + "/log/{sample}_flair_diffsplice.log", 
+        snakemake_log = snake_files + "/snakemake_log/{sample}_flair_diffsplice.log"
+    benchmark: 
+        snake_files + "/benchmark/{sample}_flair_diffsplice.bmk"
+    shell:"""
+        flair diffSplice -i {params.isoforms_bed_file} \
+        -q {params.counts_file} \
+        --out_dir_force --out_dir {params.diff_splcie_results} \
+        --threads {threads}
+
+        touch {output.done_step}
+        """
+
+
+### Plotting
+rule FLAIR_plotting:
+    input:
+        done_step = base_path + "/results/flair/diff_splice/{sample}_flair.diff_splice_done.txt"
+    output:
+        done_step = base_path + "/results/flair/plotting/{sample}_{genes}_flair.plotting_done.txt",
+    params:
+        isoforms_bed_file = base_path + "/results/flair/collapsed/{sample}.flair.collapsed.bed.isoforms.bed",
+        counts_file = base_path + "/results/flair/collapsed/{sample}.flair.collapsed.bed.firstpass.q.counts",
+        diff_splice_results = base_path + "/results/flair/diff_splice/",
+        colors = colors,
+        usage_plot = base_path + "/results/flair/plots/usage/{sample}/{sample}_{genes}.usage.png",
+        all_plot   = base_path + "/results/flair/plots/all/{sample}/{sample}_{genes}.all.png",
+        place_of_plots1 = base_path + "/results/flair/plots/usage/{sample}",
+        place_of_plots2 = base_path + "/results/flair/plots/all/{sample}"
+        # place_of_plots = /imppc/labs/eclab/ijarne/0_Recerca/5_MINION_ENIGMA/results/flair/plots/usage/LRS4_LRS4_barcode01/
+    threads:
+        2
+    conda:
+        flair_env2
+    log:
+        terminal_log = snake_files + "/log/{sample}_{genes}_flair_plotting_done.log",
+        snakemake_log = snake_files + "/snakemake_log/{sample}_{genes}_flair_plotting_done.log"
+    benchmark:
+        snake_files + "/benchmark/{sample}_{genes}_flair_plotting_done.bmk"
+    shell:"""
+        mkdir -p {params.place_of_plots1}
+        mkdir -p {params.place_of_plots2}
+
+        python -m flair.plot_isoform_usage \
+        {params.isoforms_bed_file} \
+        {params.counts_file} \
+        {wildcards.genes} \
+        -o {params.usage_plot} || true
+        
+        python -m flair.plot_isoform_usage \
+        {params.isoforms_bed_file} \
+        {params.counts_file} \
+        {wildcards.genes} \
+        -o {params.all_plot} --palette {params.colors} || true
+        
+        touch {output.done_step}
+        """
+
 rule trigger_flair:
     input:
         expand(base_path + "/results/alignments/flair/{sample}_flair.aligned_done.txt",
@@ -182,6 +259,20 @@ rule trigger_flair:
         expand(base_path + "/results/flair/quantify/{sample}_flair.quantify_done.txt",
         base_path = base_path, sample = samples_lrs4),
         expand(base_path + "/results/flair/quantify/{sample}_flair.quantify2_done.txt",
-        base_path = base_path, sample = samples_lrs5 + samples_lrs6 + samples_lrs7 + samples_lrs8)
+        base_path = base_path, sample = samples_lrs5 + samples_lrs6 + samples_lrs7 + samples_lrs8),
+        expand(base_path + "/results/flair/diff_splice/{sample}_flair.diff_splice_done.txt",
+        base_path = base_path, sample = samples),
+        expand(base_path + "/results/flair/plotting/{sample}_flair.plotting_done.txt",
+        base_path = base_path, sample = samples),
+        expand(base_path + "/results/flair/plotting/{sample}_{genes}_flair.plotting_done.txt",
+        base_path = base_path, sample = samples, genes = genes_to_work_on_ensembl),
+        # expand(base_path + "/results/flair/plots/usage/{sample}/{sample}_{genes}.usage.png",
+        # base_path = base_path, sample = samples, genes = genes_to_work_on_ensembl),
+        # expand(base_path + "/results/flair/plots/all/{sample}/{sample}_{genes}.all.png",
+        # base_path = base_path, sample = samples, genes = genes_to_work_on_ensembl)
+
+        
+
+
 
 

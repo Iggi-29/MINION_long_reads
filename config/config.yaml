@@ -35,9 +35,26 @@ genes_to_work_on:
   - RAD51D
   - TP53
 
+genes_to_work_on_ensembl:
+  - ENSG00000149311
+  - ENSG00000134982
+  - ENSG00000012048
+  - ENSG00000139618
+  - ENSG00000136492
+  - ENSG00000183765
+  - ENSG00000064933
+  - ENSG00000116062
+  - ENSG00000132781
+  - ENSG00000083093
+  - ENSG00000122512
+  - ENSG00000108384
+  - ENSG00000185379
+  - ENSG00000141510
+
 # genes_to_filter: /imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/keep_this.txt
 genes_to_filter: /imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/keep_this_ENIGMA.txt
 
+colors: /imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/colors.txt
 
 ### Tanscripts annotations and genome
 genome: "/imppc/labs/eclab/Resources/MINION_ddbb/Ref_files/GRCh38.primary_assembly.genome.fa"
@@ -53,6 +70,7 @@ anaconda_envs:
   fastpqc_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/envs/fastp_qc.yaml"
   bamslam_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/envs/g_alignments.yaml"
   flair_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/envs/flair.yaml"
+  flair_env2: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/envs/flair2.yaml"
   flames_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION2/envs/FLAMES.yaml"
   readr_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION2/envs/readr.yaml"
 
