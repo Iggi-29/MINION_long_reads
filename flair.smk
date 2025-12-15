@@ -248,6 +248,51 @@ rule FLAIR_plotting:
         touch {output.done_step}
         """
 
+### Prepare for Ulf scripts
+# rule FLAIR_diffsplice:
+#     input:
+#         expand(base_path + "/results/flair/correction/{sample}_flair.correction_done.txt",
+#         base_path = base_path, sample = samples)
+#     output:
+#         done_step = base_path + "/results/flair/prepare_for_ulf/{sample}_prepare_for_ulf.txt"
+#     params:
+#         flair_corrected_bed = base_path + "/results/flair/correction/{sample}.flair.corrected_all_corrected.bed",
+#         scriptsR = scriptsR,
+#         exons_folder = exons_folder ###OJO
+#     threads:
+#         2
+#     conda:
+#         regioneR_env ##OJO
+#     log:
+#         terminal_log = snake_files + "/log/{sample}_flair_ulfprepare.log", 
+#         snakemake_log = snake_files + "/snakemake_log/{sample}_flair_ulfprepare.log"
+#     benchmark: 
+#         snake_files + "/benchmark/{sample}_flair_ulfprepare.bmk"
+#     script:"{params.scriptsR}/0_ulf_prepare.R"
+rule FLAIR_prepare_ulf_genes:
+    input:
+        "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/start_the_pipeline.txt"
+    output:
+        done_step = base_path + "/ref_files/exons/AAA_done.txt"
+    params:
+        scriptsR = scriptsR,
+        genes_to_work_on = genes_to_work_on,
+        place_of_final_information = base_path + "/ref_files/exons/"
+    threads:
+        1
+    conda:
+        biomart_env
+    log:
+        terminal_log = snake_files + "/log/flair_prepare_ulf_genes.log", 
+        snakemake_log = snake_files + "/snakemake_log/flair_prepare_ulf_genes.log"
+    benchmark: 
+        snake_files + "/benchmark/flair_prepare_ulf_genes.bmk"
+    script:"{params.scriptsR}/0_ulf_prepare_exons.R"
+
+### Step1 of Ulf
+
+### Step2 of Ulf
+
 rule trigger_flair:
     input:
         # expand(base_path + "/results/alignments/flair/{sample}_flair.aligned_done.txt",
@@ -269,7 +314,8 @@ rule trigger_flair:
         # expand(base_path + "/results/flair/plots/usage/{sample}/{sample}_{genes}.usage.png",
         # base_path = base_path, sample = samples, genes = genes_to_work_on_ensembl),
         # expand(base_path + "/results/flair/plots/all/{sample}/{sample}_{genes}.all.png",
-        # base_path = base_path, sample = samples, genes = genes_to_work_on_ensembl)
+        # base_path = base_path, sample = samples, genes = genes_to_work_on_ensembl),
+        base_path + "/ref_files/exons/AAA_done.txt"
 
         
 

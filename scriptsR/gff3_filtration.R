@@ -9,8 +9,8 @@ library(dplyr)
 raw_gff3 <- snakemake@input[["gff3_filtered"]]
 final_gff3 <- snakemake@output[["gff3_filtered_MANE"]]
 
-gff <- readr::read_tsv(raw_gff, skip = 7, col_names = FALSE)
-gff_header <- readLines(con = raw_gff, n = 7)
+gff <- readr::read_tsv(raw_gff3, skip = 7, col_names = FALSE)
+gff_header <- readLines(con = raw_gff3, n = 7)
 
 colnames(gff) <- c("chr","source_of_ann","type","start","end","dot1","strand","dunno","tag")
 

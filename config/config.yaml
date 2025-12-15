@@ -73,6 +73,7 @@ anaconda_envs:
   flair_env2: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/envs/flair2.yaml"
   flames_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION2/envs/FLAMES.yaml"
   readr_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION2/envs/readr.yaml"
+  biomart_env: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION2/envs/biomart.yaml"
 
 ## Singularity images
 singularity_imgs:

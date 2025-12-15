@@ -21,6 +21,7 @@ flair_env = config["anaconda_envs"]["flair_env"]
 flair_env2 = config["anaconda_envs"]["flair_env2"]
 flames_env = config["anaconda_envs"]["flames_env"]
 readr_env = config["anaconda_envs"]["readr_env"]
+biomart_env = config["anaconda_envs"]["biomart_env"]
 
 ## images
 minimap2_img = config["singularity_imgs"]["minimap2_img"]
@@ -76,8 +77,8 @@ include: "flames.smk"
 rule all:
     input:
         rules.trigger_prepare_data.input,
-        rules.trigger_QC.input,
-        rules.trigger_transcriptome_align.input,
-        rules.trigger_flames.input,
-        rules.trigger_flair.input
+        # rules.trigger_QC.input,
+        # rules.trigger_transcriptome_align.input,
+        # rules.trigger_flames.input,
+        # rules.trigger_flair.input
 
