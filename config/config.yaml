@@ -79,8 +79,8 @@ anaconda_envs:
 singularity_imgs:
   minimap2_img: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/sing_images/minimap2_2.30.sif"
   samtools_img: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/sing_images/samtools_v1.7.0_cv4.sif"
-  fastqc_image: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/sing_images/fastqc_0.12.1.sif"
-  multiqc_image: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/sing_images/multiqc_1_8.sif"
+  fastqc_image: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/sing_images/fastqc_v0.11.9_cv8.sif"
+  multiqc_image: "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/sing_images/multiqc_v1.31.sif"
 
 ### Important folders
 base_path: "/imppc/labs/eclab/ijarne/0_Recerca/5_MINION_ENIGMA"
@@ -115,7 +115,7 @@ samples_lrs5:
   - LRS5_LRS5_barcode09
 
 samples_lrs6:
-  - LRS6_LRS6_barcode11
+  # - LRS6_LRS6_barcode11
   - LRS6_LRS6_barcode12
   - LRS6_LRS6_barcode13
   - LRS6_LRS6_barcode14
@@ -157,7 +157,7 @@ samples:
   - LRS5_LRS5_barcode07
   - LRS5_LRS5_barcode08
   - LRS5_LRS5_barcode09
-  - LRS6_LRS6_barcode11
+  # - LRS6_LRS6_barcode11
   - LRS6_LRS6_barcode12
   - LRS6_LRS6_barcode13
   - LRS6_LRS6_barcode14

@@ -77,8 +77,8 @@ include: "flames.smk"
 rule all:
     input:
         rules.trigger_prepare_data.input,
-        # rules.trigger_QC.input,
-        # rules.trigger_transcriptome_align.input,
-        # rules.trigger_flames.input,
-        # rules.trigger_flair.input
+        rules.trigger_QC.input,
+        rules.trigger_transcriptome_align.input,
+        rules.trigger_flames.input,
+        rules.trigger_flair.input
 

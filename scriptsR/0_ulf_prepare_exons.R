@@ -6,13 +6,13 @@
 library(biomaRt)
 
 #### snakemake parameters
-genes_to_work_on <- snakemake@params[["genes_to_work_on"]]
+genes_to_filter <- snakemake@params[["genes_to_filter"]]
 place_of_final_information <- snakemake@params[["place_of_final_information"]]
 ### for now
-# genes_to_work_on <- "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/keep_this_ENIGMA.txt"
+# genes_to_filter <- "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/config/keep_this_ENIGMA.txt"
 # place_of_final_information <- "/imppc/labs/eclab/ijarne/0_Recerca/5_MINION_ENIGMA/ref_files/exons/"
 
-genes_to_work_on <- readLines(genes_to_work_on)
+genes_to_filter <- readLines(genes_to_filter)
 
 #### Connect to biomaRt and do the job
 mart <- biomaRt::useEnsembl(biomart = "ensembl", version = 115)
@@ -26,7 +26,7 @@ attrs <- biomaRt::listAttributes(mart = ensembl)
 annotation_of_genes_select <- biomaRt::getBM(mart = ensembl,
                                              attributes = c("hgnc_symbol","ensembl_gene_id","ensembl_transcript_id","transcript_mane_select"),
                                              filters = c("hgnc_symbol"), 
-                                             values = genes_to_work_on)
+                                             values = genes_to_filter)
 
 annotation_of_genes_select <- annotation_of_genes_select[annotation_of_genes_select[[4]] != "",, 
                                                          drop = FALSE]
@@ -46,15 +46,15 @@ annotation_final <- merge(annotation_of_genes_select, annotation_of_genes, by = 
 cols_i_want <- c("hgnc_symbol","chromosome_name","exon_chrom_start","exon_chrom_end",
                  "ensembl_exon_id","rank","strand")
 annotation_final <- annotation_final[,grep(pattern = paste0(x = cols_i_want, collapse = "|"), x = colnames(annotation_final)), drop = FALSE]
-final_col_names <- c("hgnc_symbol","chromosome","srart","end","exon_name","exon#","strand")
+final_col_names <- c("hgnc_symbol","chromosome","start","end","exon_name","exon#","strand")
 colnames(annotation_final) <- final_col_names
 
 ### save the final annotations per gene
-genes_to_work_on[which(!genes_to_work_on %in% unique(annotation_final$hgnc_symbol))]
-genes_to_work_on <- genes_to_work_on[genes_to_work_on %in% unique(annotation_final$hgnc_symbol)]
-for (i in 1:length(genes_to_work_on)) {
+genes_to_filter[which(!genes_to_filter %in% unique(annotation_final$hgnc_symbol))]
+genes_to_filter <- genes_to_filter[genes_to_filter %in% unique(annotation_final$hgnc_symbol)]
+for (i in 1:length(genes_to_filter)) {
   ## data now
-  gene_now <- genes_to_work_on[i]
+  gene_now <- genes_to_filter[i]
   annotation_now <- annotation_final[annotation_final[[1]] == gene_now,, drop = FALSE]
   ## strand name change
   strand_old <-unique(annotation_now$strand)

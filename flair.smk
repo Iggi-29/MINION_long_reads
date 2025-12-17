@@ -138,7 +138,7 @@ rule FLAIR_quantify2:
         manifest_file7 =  manifest_file_lrs7,
         manifest_file8 =  manifest_file_lrs8,
     threads:
-        20
+        10
     conda:
         flair_env
     log:
@@ -249,26 +249,6 @@ rule FLAIR_plotting:
         """
 
 ### Prepare for Ulf scripts
-# rule FLAIR_diffsplice:
-#     input:
-#         expand(base_path + "/results/flair/correction/{sample}_flair.correction_done.txt",
-#         base_path = base_path, sample = samples)
-#     output:
-#         done_step = base_path + "/results/flair/prepare_for_ulf/{sample}_prepare_for_ulf.txt"
-#     params:
-#         flair_corrected_bed = base_path + "/results/flair/correction/{sample}.flair.corrected_all_corrected.bed",
-#         scriptsR = scriptsR,
-#         exons_folder = exons_folder ###OJO
-#     threads:
-#         2
-#     conda:
-#         regioneR_env ##OJO
-#     log:
-#         terminal_log = snake_files + "/log/{sample}_flair_ulfprepare.log", 
-#         snakemake_log = snake_files + "/snakemake_log/{sample}_flair_ulfprepare.log"
-#     benchmark: 
-#         snake_files + "/benchmark/{sample}_flair_ulfprepare.bmk"
-#     script:"{params.scriptsR}/0_ulf_prepare.R"
 rule FLAIR_prepare_ulf_genes:
     input:
         "/imppc/labs/eclab/ijarne/0_Recerca/pipelines/MINION/start_the_pipeline.txt"
@@ -276,7 +256,7 @@ rule FLAIR_prepare_ulf_genes:
         done_step = base_path + "/ref_files/exons/AAA_done.txt"
     params:
         scriptsR = scriptsR,
-        genes_to_work_on = genes_to_work_on,
+        genes_to_filter = genes_to_filter,
         place_of_final_information = base_path + "/ref_files/exons/"
     threads:
         1
@@ -288,6 +268,29 @@ rule FLAIR_prepare_ulf_genes:
     benchmark: 
         snake_files + "/benchmark/flair_prepare_ulf_genes.bmk"
     script:"{params.scriptsR}/0_ulf_prepare_exons.R"
+
+
+rule FLAIR_prepare_ulf_samples:
+    input:
+        done_step = base_path + "/ref_files/exons/AAA_done.txt",
+        expand(base_path + "/results/flair/plotting/{sample}_flair.plotting_done.txt",
+        base_path = base_path, sample = samples),
+    output:
+        done_step = base_path + "/results/flair/prepare_for_ulf/{sample}_prepare_for_ulf.txt"
+    params:
+        flair_corrected_bed = base_path + "/results/flair/correction/{sample}.flair.corrected_all_corrected.bed",
+        scriptsR = scriptsR,
+        exons_folder = base_path + "/ref_files/exons/"
+    threads:
+        2
+    conda:
+        regioneR_env ##OJO
+    log:
+        terminal_log = snake_files + "/log/{sample}_flair_ulfprepare.log", 
+        snakemake_log = snake_files + "/snakemake_log/{sample}_flair_ulfprepare.log"
+    benchmark: 
+        snake_files + "/benchmark/{sample}_flair_ulfprepare.bmk"
+    script:"{params.scriptsR}/0_ulf_prepare.R"
 
 ### Step1 of Ulf
 
