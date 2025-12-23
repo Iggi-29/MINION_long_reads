@@ -4,14 +4,14 @@
 # Execute from the current workig dir
 #$ -cwd
 # Name for the script in the queuing system
-#$ -N Nanopore_processing_ENIGMA
+#$ -N Run1
 # In order to load the environment variables and your path
 # You can either use this or do a : source /etc/profile
 #$ -V
 # You can redirect the error output to a specific file
-#$ -e Nanopore_processing_ENIGMA.err
+#$ -e Run1.err
 # You can redirect the output to a specific file
-#$ -o Nanopore_processing_ENIGMA.log
+#$ -o Run1.log
 #$ -pe smp 20
 #$ -q d12imppc  # los nodos nuevos!
 #$ -l h_vmem=9G
@@ -41,6 +41,7 @@ echo "Running at dir: $WORKDIR"
 # Activate anacodna
 source "/imppc/labs/eclab/${Myuser}/miniconda3/etc/profile.d/conda.sh"
 conda activate snakemake
+
 # Snakemake run
 snakemake --forceall --rulegraph | dot -Tpdf > dag.pdf
 snakemake --unlock
